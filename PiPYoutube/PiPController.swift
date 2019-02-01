@@ -24,9 +24,9 @@ class PiPController: UIViewController, PIPUsable {
     let width = 276
     
     var pipSize: CGSize = CGSize(width: 276, height: 155.0)
+    let player : AVPlayer? = nil
     
     
-
     
     let playerVC = AVPlayerViewController()
     
@@ -38,19 +38,7 @@ class PiPController: UIViewController, PIPUsable {
         let player = AVPlayer(url: url)
         playerVC.view.frame = self.view.frame
         playerVC.player = player
-
         addChild(playerVC)
-        
-        
-        let button = UIButton(type: .system)
-        button.addTarget(self, action: #selector(fuckingClose), for: .touchUpInside)
-        button.frame = CGRect(x: 50, y: 50, width: 50, height: 50)
-        button.backgroundColor = .red
-//        playerVC.contentOverlayView?.addSubview(button)
-//        playerVC.showsPlaybackControls = false
-        
-        
-        
         view.addSubview(playerVC.view)
         playerVC.didMove(toParent: self)
         player.play()
@@ -60,12 +48,61 @@ class PiPController: UIViewController, PIPUsable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        noYoutube()
+        //        noYoutube()
         
         view.layer.cornerRadius = 8
         view.layer.masksToBounds = true
         
-//        playYoutubeVideo(videoIdentifier: "9Aoa82SwALU")
+        
+        //        playYoutubeVideo(videoIdentifier: "9Aoa82SwALU")
+        
+        
+        //        let playerViewController = AVPlayerViewController()
+        //        XCDYouTubeClient.default().getVideoWithIdentifier("2pQ04FriBxs", completionHandler: { video, error in
+        //
+        //            if video != nil {
+        //                var streamURLs = video?.streamURLs
+        //                let streamURL = streamURLs?[XCDYouTubeVideoQualityHTTPLiveStreaming] ?? streamURLs?[YouTubeVideoQuality.hd720] ?? streamURLs?[YouTubeVideoQuality.medium360] ?? streamURLs?[YouTubeVideoQuality.small240]
+        //                if let streamURL = streamURL {
+        //                    print("🏳️", streamURL, "🏳️")
+        //                    let player = AVPlayer(url: streamURL)
+        //                    playerViewController.view.frame = self.view.frame
+        //                    playerViewController.player = player
+        //                    self.view.addSubview(playerViewController.view)
+        //                    playerViewController.didMove(toParent: self)
+        //                    self.addChild(playerViewController)
+        //                }
+        //                playerViewController.player?.play()
+        //            } else {
+        //                self.dismiss(animated: true)
+        //            }
+        //        })
+        
+        let playerViewController = AVPlayerViewController()
+        
+        
+        playerViewController.view.frame = self.view.frame
+        playerViewController.player = player
+        addChild(playerViewController)
+        view.addSubview(playerViewController.view)
+        playerViewController.didMove(toParent: self)
+        
+        
+        weak var weakPlayerViewController: AVPlayerViewController? = playerViewController
+        XCDYouTubeClient.default().getVideoWithIdentifier("2pQ04FriBxs", completionHandler: { video, error in
+            if video != nil {
+                var streamURLs = video?.streamURLs
+                var streamURL = streamURLs?[XCDYouTubeVideoQualityHTTPLiveStreaming] ?? streamURLs?[YouTubeVideoQuality.hd720] ?? streamURLs?[YouTubeVideoQuality.medium360] ?? streamURLs?[YouTubeVideoQuality.small240] as? URL
+                if let streamURL = streamURL {
+                    weakPlayerViewController?.player = AVPlayer(url: streamURL)
+                }
+                weakPlayerViewController?.player?.play()
+            } else {
+                self.dismiss(animated: true)
+            }
+        })
+        
+        
         
     }
     
