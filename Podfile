@@ -8,7 +8,6 @@ target 'PiPYoutube' do
   # Pods for PiPYoutube
 pod 'PIPKit'
 pod 'XCDYouTubeKit'
-pod 'YTPlayerView'
 
 
 end

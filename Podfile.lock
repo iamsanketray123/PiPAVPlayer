@@ -1,6 +1,6 @@
 PODS:
-  - PIPKit (0.0.3)
-  - XCDYouTubeKit (2.7.1)
+  - PIPKit (0.1.0)
+  - XCDYouTubeKit (2.7.3)
 
 DEPENDENCIES:
   - PIPKit
@@ -12,8 +12,8 @@ SPEC REPOS:
     - XCDYouTubeKit
 
 SPEC CHECKSUMS:
-  PIPKit: b5f2d16e5b1de4a65c063b7147fed68a50583901
-  XCDYouTubeKit: c8567fd5cb388a3099fa26eee4b30df2a467847d
+  PIPKit: bf6c7a1d8a16757a6800c36ae1f5fcb88d686408
+  XCDYouTubeKit: 3f4fd3eb3ed494a46a8f007b91315eed6dd6df1f
 
 PODFILE CHECKSUM: 7e208920e8c8c76a3e6433f160aea90aca5e0032
 

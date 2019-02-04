@@ -34,7 +34,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Kfd-em-RLM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5lX-yx-Rwg"/>
                             <constraint firstItem="Kfd-em-RLM" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="ohJ-2G-5qH"/>
@@ -69,13 +69,32 @@
                     <view key="view" contentMode="scaleToFill" id="JFn-p1-AWh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="737-YN-mna">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="E4X-mf-E6Q">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <vibrancyEffect>
+                                    <blurEffect style="light"/>
+                                </vibrancyEffect>
+                            </visualEffectView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="737-YN-mna" firstAttribute="top" secondItem="JFn-p1-AWh" secondAttribute="top" id="4to-eT-5dB"/>
+                            <constraint firstItem="J5Y-mw-lGz" firstAttribute="trailing" secondItem="737-YN-mna" secondAttribute="trailing" id="JFL-ky-xzg"/>
+                            <constraint firstItem="737-YN-mna" firstAttribute="leading" secondItem="JFn-p1-AWh" secondAttribute="leading" id="YAf-zM-CxK"/>
+                            <constraint firstItem="J5Y-mw-lGz" firstAttribute="bottom" secondItem="737-YN-mna" secondAttribute="bottom" id="juR-6r-q3K"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="J5Y-mw-lGz"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZVb-jv-DVs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1471" y="45"/>
+            <point key="canvasLocation" x="1469.5999999999999" y="44.527736131934034"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="rja-5j-Hkk">

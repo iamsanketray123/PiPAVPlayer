@@ -21,67 +21,45 @@ struct YouTubeVideoQuality {
 class PiPController: UIViewController, PIPUsable {
     
     var initialState: PIPState { return .pip }
-    let width = 276
     
-    var pipSize: CGSize = CGSize(width: 276, height: 155.0)
+    var pipSize: CGSize = CGSize(width: 256, height: 188)
     let player : AVPlayer? = nil
     
     
     
     let playerVC = AVPlayerViewController()
     
-    fileprivate func noYoutube() {
-        //        let url = URL(fileURLWithPath: "https://s3.amazonaws.com/kargopolov/kukushka.mp3")
+    fileprivate func playYoutube(identifier: String) {
         
-        let url = URL(fileURLWithPath: "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
-        
-        let player = AVPlayer(url: url)
-        playerVC.view.frame = self.view.frame
-        playerVC.player = player
-        addChild(playerVC)
-        view.addSubview(playerVC.view)
-        playerVC.didMove(toParent: self)
-        player.play()
-        
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        //        noYoutube()
-        
-        view.layer.cornerRadius = 8
-        view.layer.masksToBounds = true
-        
-        
-        //        playYoutubeVideo(videoIdentifier: "9Aoa82SwALU")
-        
-        
-        //        let playerViewController = AVPlayerViewController()
-        //        XCDYouTubeClient.default().getVideoWithIdentifier("2pQ04FriBxs", completionHandler: { video, error in
-        //
-        //            if video != nil {
-        //                var streamURLs = video?.streamURLs
-        //                let streamURL = streamURLs?[XCDYouTubeVideoQualityHTTPLiveStreaming] ?? streamURLs?[YouTubeVideoQuality.hd720] ?? streamURLs?[YouTubeVideoQuality.medium360] ?? streamURLs?[YouTubeVideoQuality.small240]
-        //                if let streamURL = streamURL {
-        //                    print("🏳️", streamURL, "🏳️")
-        //                    let player = AVPlayer(url: streamURL)
-        //                    playerViewController.view.frame = self.view.frame
-        //                    playerViewController.player = player
-        //                    self.view.addSubview(playerViewController.view)
-        //                    playerViewController.didMove(toParent: self)
-        //                    self.addChild(playerViewController)
-        //                }
-        //                playerViewController.player?.play()
-        //            } else {
-        //                self.dismiss(animated: true)
-        //            }
-        //        })
+//        let url = URL(fileURLWithPath: "https://s3.amazonaws.com/kargopolov/kukushka.mp3")
+//        let url = URL(fileURLWithPath: "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
+//        let player = AVPlayer(url: url)
+//        playerVC.view.frame = self.view.frame
+//        playerVC.player = player
+//        addChild(playerVC)
+//        view.addSubview(playerVC.view)
+//        playerVC.didMove(toParent: self)
+//        player.play()
         
         let playerViewController = AVPlayerViewController()
         
+        self.view.addSubview(playerViewController.view)
+        playerViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        playerViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        playerViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        playerViewController.view.topAnchor.constraint(equalTo: view.topAnchor, constant: 44).isActive = true
+        playerViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
-        playerViewController.view.frame = self.view.frame
+        
+        let cancel = UIButton(type: .system)
+        self.view.addSubview(cancel)
+        cancel.anchor(top: self.view.topAnchor, left: nil, bottom: nil, right: self.view.rightAnchor, paddingTop: 16, paddingLeft: 0, paddingBottom: 8, paddingRight: 0, width: 24, height: 24)
+        cancel.setImage(UIImage(named: "cancel")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        cancel.addTarget(self, action: #selector(fuckingClose), for: .touchUpInside)
+        
+        playerViewController.view.layer.cornerRadius = 8
+        playerViewController.view.layer.masksToBounds = true
+        
         playerViewController.player = player
         addChild(playerViewController)
         view.addSubview(playerViewController.view)
@@ -89,10 +67,10 @@ class PiPController: UIViewController, PIPUsable {
         
         
         weak var weakPlayerViewController: AVPlayerViewController? = playerViewController
-        XCDYouTubeClient.default().getVideoWithIdentifier("JeBzqDov-3M&t=5s", completionHandler: { video, error in
+        XCDYouTubeClient.default().getVideoWithIdentifier(identifier, completionHandler: { video, error in
             if video != nil {
                 var streamURLs = video?.streamURLs
-                let streamURL = streamURLs?[XCDYouTubeVideoQualityHTTPLiveStreaming] ?? streamURLs?[YouTubeVideoQuality.hd720] ?? streamURLs?[YouTubeVideoQuality.medium360] ?? streamURLs?[YouTubeVideoQuality.small240] as? URL
+                let streamURL = streamURLs?[XCDYouTubeVideoQualityHTTPLiveStreaming] ?? streamURLs?[YouTubeVideoQuality.hd720] ?? streamURLs?[YouTubeVideoQuality.medium360] ?? streamURLs?[YouTubeVideoQuality.small240]
                 if let streamURL = streamURL {
                     weakPlayerViewController?.player = AVPlayer(url: streamURL)
                 }
@@ -102,36 +80,21 @@ class PiPController: UIViewController, PIPUsable {
             }
         })
         
-        
-        
     }
     
-    
-    func playYoutubeVideo(videoIdentifier: String?) {
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        let playerViewController = AVPlayerViewController()
-        self.present(playerViewController, animated: true, completion: nil)
+        view.layer.cornerRadius = 8
+        view.layer.masksToBounds = true
         
-        XCDYouTubeClient.default().getVideoWithIdentifier(videoIdentifier) { [weak playerViewController] (video: XCDYouTubeVideo?, error: Error?) in
-            if let streamURLs = video?.streamURLs, let streamURL = (streamURLs[XCDYouTubeVideoQualityHTTPLiveStreaming] ?? streamURLs[YouTubeVideoQuality.hd720] ?? streamURLs[YouTubeVideoQuality.medium360] ?? streamURLs[YouTubeVideoQuality.hd720]) {
-                let player = AVPlayer(url: streamURL)
-                
-                playerViewController?.view.frame = self.view.frame
-                playerViewController?.player = player
-                self.addChild(playerViewController!)
-                self.view.addSubview(playerViewController!.view)
-                playerViewController?.didMove(toParent: self)
-                
-                playerViewController?.player?.play()
-                
-            } else {
-                self.dismiss(animated: true, completion: nil)
-            }
-        }
+        playYoutube(identifier: "JeBzqDov-3M&t=5s")
+        
     }
+
     
     @objc func fuckingClose() {
-        print(123)
+        print("closing")
         PIPKit.dismiss(animated: true)
     }
     
@@ -201,4 +164,30 @@ struct DeviceTypes {
     }
     
     
+}
+
+extension UIView {
+    func anchor(top : NSLayoutYAxisAnchor?, left: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, right: NSLayoutXAxisAnchor?, paddingTop : CGFloat, paddingLeft : CGFloat, paddingBottom: CGFloat, paddingRight: CGFloat, width : CGFloat, height: CGFloat) {
+        
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        if let top = top {
+            self.topAnchor.constraint(equalTo: top, constant: paddingTop).isActive = true
+        }
+        if let left = left {
+            self.leftAnchor.constraint(equalTo: left, constant: paddingLeft).isActive = true
+        }
+        if let bottom = bottom {
+            bottomAnchor.constraint(equalTo: bottom, constant: -paddingBottom).isActive = true
+        }
+        if let right = right {
+            rightAnchor.constraint(equalTo: right, constant: -paddingRight).isActive = true
+        }
+        if width != 0 {
+            widthAnchor.constraint(equalToConstant: width).isActive = true
+        }
+        if height != 0 {
+            heightAnchor.constraint(equalToConstant: height).isActive = true
+        }
+    }
 }
